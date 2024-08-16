@@ -1,34 +1,34 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router();
 
-const signup = require('../models/signup')
+const signup = require("../models/signup");
 
 router.get("/signup", (req, res) => {
-    res.render("signup");
+  res.render("signup");
 });
 // Register admin
 router.post("/signup", async (req, res) => {
-    try {
+  try {
     // added
-    const existingUser = await signup.findOne({ email: req.body.email });// check if the user already exist
+    const existingUser = await signup.findOne({ email: req.body.email }); // check if the user already exist
     if (existingUser) {
-    return res
-    .status(400)
-    .send("Not registered, a user with a similar email already exists!");
+      return res
+        .status(400)
+        .send("Not registered, a user with a similar email already exists!");
     }
     const user = new signup(req.body);
     // added
-    await signup.register(user, req.body.password, (err) => { // used to register a user who will later login
-    if (err) {
-    throw err;
-    }
-    res.redirect("/login");
+    await signup.register(user, req.body.password, (err) => {
+      // used to register a user who will later login
+      if (err) {
+        throw err;
+      }
+      res.redirect("/login");
     });
-    } catch (err) {
+  } catch (err) {
     res.status(400).render("signup", { tittle: "Signup" });
     console.log("Signup user error", err);
-    }
-    });
+  }
+});
 
 module.exports = router;
-

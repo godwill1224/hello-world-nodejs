@@ -12,6 +12,8 @@ html(lang="en")
           th Email Address
           th Role
           th Branch
+          th Action
+          th
       tbody
         if users.length 
         each user in users
@@ -20,5 +22,11 @@ html(lang="en")
             td #{user.email}
             td #{user.role}
             td #{user.branch}
+            td 
+              a(href="/update-user/"+user._id class="edit-btn") Edit
+            td
+              form(method="POST" action="/delete-user")
+                input(type="hidden" placeholder="" Name="id" value=user._id )
+                button(class="delete-btn" type="submit") Delete
         else 
           p no users signed up yet
