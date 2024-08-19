@@ -11,7 +11,7 @@
     "helloWorld",
     "node.js"
   ],
-  "author": "godwill1224s",
+  "author": "godwill1224",
   "license": "ISC",
   "dependencies": {
     "connect-ensure-login": "^0.1.1",

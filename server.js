@@ -17,14 +17,14 @@ require("dotenv").config();
 const Signup = require("./models/signup");
 
 // importing routes
-const loginRoutes = require("./routes/loginRoutes");
-const signupRoutes = require("./routes/signupRoutes");
 const userRoutes = require("./routes/userRoutes");
-const logoutRoutes = require("./routes/logoutRoutes");
+const authRoutes = require("./routes/authRoutes");
+const pageRoutes = require("./routes/pageRoutes");
+const stockRoutes = require("./routes/stockRoutes");
 
 // instantiations
 const app = express();
-const port = 4500;
+const port = 4000;
 
 // configurations
 // set db connection to mongoose
@@ -61,10 +61,10 @@ passport.serializeUser(Signup.serializeUser()); // assign a serial number to a u
 passport.deserializeUser(Signup.deserializeUser()); // the serial number is destroyed on log out
 
 // use imported routes
-app.use("/", loginRoutes);
-app.use("/", signupRoutes);
 app.use("/", userRoutes);
-app.use("/", logoutRoutes);
+app.use("/", authRoutes);
+app.use("/", pageRoutes);
+app.use("/", stockRoutes);
 
 app.get("*", (req, res) => {
   res.send("Error! This page does not exist");

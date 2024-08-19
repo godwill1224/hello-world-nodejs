@@ -27,9 +27,7 @@ form {
     flex-direction: column;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+input {
     width: 90%;
     padding: 10px;
     margin: 10px 0;

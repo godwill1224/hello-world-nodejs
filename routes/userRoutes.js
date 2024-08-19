@@ -4,28 +4,8 @@ const connectEnsureLogin = require("connect-ensure-login");
 
 const signup = require("../models/signup");
 
-// home route
-router.get("/", (req, res) => {
-  // res.send("Welcome to HHG Management System");
-  res.render("home");
-});
-
-
-// manager route
-// connectEnsureLogin.ensureLoggedIn(),
-router.get("/manager-dashboard", connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-  // res.send("Welcome to HHG Management System");
-  res.render("manager-dashboard");
-});
-
-// sales agent route
-router.get("/sales-agent-dashboard", connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-  // res.send("Welcome to HHG Management System");
-  res.render("sales-agent-dashboard");
-});
-
-// get all users
-router.get("/all-users", connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+// all users
+router.get("/all-users-page", connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
   try {
     if (req.session.user.role === "manager") { // ensure that only managers access all-users page
       const allUsers = await signup.find().sort({ $natural: -1 });
@@ -40,9 +20,8 @@ router.get("/all-users", connectEnsureLogin.ensureLoggedIn(), async (req, res) =
   }
 });
 
-// edit user
-// get user update form
-router.get("/update-user/:id", async (req, res) => {
+// update user
+router.get("/update-user-page/:id", async (req, res) => {
   try {
     const dbUser = await signup.findOne({ _id: req.params.id });
     res.render("update-user", {
@@ -53,11 +32,10 @@ router.get("/update-user/:id", async (req, res) => {
   }
 });
 
-// post updated user
-router.post("/update-user", async (req, res) => {
+router.post("/update-user-page", async (req, res) => {
   try {
     await signup.findOneAndUpdate({ _id: req.query.id }, req.body);
-    res.redirect("/all-users");
+    res.redirect("/all-users-page");
   } catch (err) {
     res.status(404).send("Unable to update user in the database");
   }
@@ -74,6 +52,11 @@ router.post("/delete-user", async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
 
 
 
